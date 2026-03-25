@@ -4,7 +4,7 @@ Software development agents, workflows, and git safety for [claude-code-hermit](
 
 ## Requires
 
-- `claude-code-hermit` v0.0.1+ (core)
+- `claude-code-hermit` v0.0.2+ (core)
 
 ## Install
 
@@ -40,7 +40,7 @@ claude plugin install claude-code-dev-hermit@claude-code-dev-hermit --scope proj
 | `/claude-code-dev-hermit:dev-session` | Orchestrated development session with quality workflow |
 | `/claude-code-dev-hermit:dev-parallel` | Parallel work routing (pattern → `/batch`, independent → Agent Teams) |
 | `/claude-code-dev-hermit:dev-cleanup` | List and clean up stale or merged git branches |
-| `/claude-code-dev-hermit:init` | Initialize the dev pack in a target project |
+| `/claude-code-dev-hermit:init` | Initialize the dev hermit in a target project |
 
 ## Git Safety
 

@@ -83,7 +83,7 @@ The workflow becomes:
 2. /review produces findings (6 specialist agents)
 3. Reviewer agent is invoked with those findings as input
 4. Agent cross-references against its persistent memory, filters false
-   positives based on OPERATOR.md, and formats for ACTIVE.md
+   positives based on OPERATOR.md, and formats for SHELL.md
 
 This avoids the subagent-can't-invoke-skills constraint while preserving
 the reviewer's institutional memory value.

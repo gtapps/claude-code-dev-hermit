@@ -1,6 +1,6 @@
 {
   "name": "claude-code-dev-hermit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Software development agents, workflows, and git safety for claude-code-hermit",
   "author": {
     "name": "gtapps"

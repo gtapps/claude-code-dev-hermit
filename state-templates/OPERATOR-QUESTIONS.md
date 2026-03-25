@@ -1,5 +1,5 @@
-# Dev Pack Questions for OPERATOR.md Onboarding
-# Read by claude-code-hermit:init step 5a (domain pack extension)
+# Dev Hermit Questions for OPERATOR.md Onboarding
+# Read by claude-code-hermit:init step 5a (hermit extension)
 # These questions are appended to core's onboarding batch.
 
 | # | Question | Skip if... | Maps to section |

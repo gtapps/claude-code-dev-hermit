@@ -39,7 +39,7 @@ quality checklist:
 
 - [ ] Feature branch is committed (no uncommitted changes in worktree)
 - [ ] Tests pass on the feature branch
-- [ ] Branch name is recorded in ACTIVE.md
+- [ ] Branch name is recorded in SHELL.md
 - [ ] If implementation is partial (full shutdown only): "Next Start Point" describes what
       remains to implement (not just "continue work") — idle transitions use Session Summary instead
 - [ ] If reviewer was invoked: recommendation (approve/request-changes/
@@ -50,8 +50,8 @@ quality checklist:
 
 ## Dev Session Hygiene
 
-Dev workflows generate verbose ACTIVE.md updates (implementer output, review findings,
-/simplify results). Core's session hygiene rules apply: keep ACTIVE.md under 150 lines,
+Dev workflows generate verbose SHELL.md updates (implementer output, review findings,
+/simplify results). Core's session hygiene rules apply: keep SHELL.md under 150 lines,
 compact at 200+. After each implementer cycle, check line count and summarize older
 Progress Log entries if needed.
 
@@ -79,4 +79,4 @@ Dev categories above are for manual proposals created during dev sessions.
 - Branch cleanup: `/claude-code-dev-hermit:dev-cleanup`
 - List proposals: `/claude-code-hermit:proposal-list` (includes auto-detected)
 - Act on proposal: `/claude-code-hermit:proposal-act accept|defer|dismiss PROP-NNN`
-- Next mission: accepted proposals may create NEXT-MISSION.md, offered at session start
+- Next task: accepted proposals may create NEXT-TASK.md, offered at session start

@@ -4,10 +4,10 @@ description: Launch parallel work for the current session. Routes to /batch (pat
 ---
 # /dev-parallel
 
-Launch parallel work for the current session mission. Routes to the best parallel execution strategy based on the nature of the tasks.
+Launch parallel work for the current session task. Routes to the best parallel execution strategy based on the nature of the work.
 
 ## Prerequisites
-- An active session with a defined mission (`.claude/.claude-code-hermit/sessions/ACTIVE.md` must exist)
+- An active session with a defined task (`.claude/.claude-code-hermit/sessions/SHELL.md` must exist)
 
 ## External Dependencies (Optional)
 
@@ -19,8 +19,8 @@ Launch parallel work for the current session mission. Routes to the best paralle
 
 ### 1. Assess the parallel work
 
-- Read `.claude/.claude-code-hermit/sessions/ACTIVE.md` for the current mission and steps
-- Identify steps that have no dependencies on each other
+- Read `.claude/.claude-code-hermit/sessions/SHELL.md` for the current task and plan
+- Identify plan items that have no dependencies on each other
 - Classify the work:
 
 ### 2. Pattern-based work (apply X to every file matching Y)
@@ -28,12 +28,12 @@ Launch parallel work for the current session mission. Routes to the best paralle
 Same type of change across many files (e.g., "migrate all components from X to Y", "add error handling to all API routes"):
 
 1. Route to `/batch` (if available)
-   - Update ACTIVE.md: mark parallel items as `in_progress`, note start time
-   - Draft a well-formed `/batch` instruction from ACTIVE.md task descriptions
+   - Update SHELL.md: mark parallel items as `in_progress`, note start time
+   - Draft a well-formed `/batch` instruction from SHELL.md task descriptions
    - Present the draft to the operator for confirmation
    - The operator runs `/batch` with the confirmed instruction
    - `/batch` handles: planning, decomposition (5-30 units), worktree isolation, parallel execution, and auto-runs `/simplify` on each worker's output
-   - **After `/batch` completes:** Update ACTIVE.md with results — branches created, PRs opened, which items succeeded/failed
+   - **After `/batch` completes:** Update SHELL.md with results — branches created, PRs opened, which items succeeded/failed
 
 2. If `/batch` not available: fall back to sequential execution of each item using the `implementer` agent
 
@@ -47,14 +47,14 @@ Distinct changes in different areas:
 
 1. Check if `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set
 2. If set: use Agent Teams with implementer constraints per teammate
-   - Update ACTIVE.md: mark parallel items as `in_progress`, note start time
+   - Update SHELL.md: mark parallel items as `in_progress`, note start time
    - For each independent task, spawn a teammate using the Agent tool:
      - Clear, bounded task description
      - `implementer` agent constraints (worktree isolation, no push, no --no-verify)
      - Its own branch (e.g., `feature/task-1-description`)
    - Monitor progress, collect results
    - **After all teammates finish:** Run `/simplify` on each branch's changes in the main session (teammates cannot invoke skills). Then run `/pr-review-toolkit:review-pr` for review.
-   - Update ACTIVE.md with consolidated results
+   - Update SHELL.md with consolidated results
 3. If NOT set: fall back to sequential execution via `implementer` agent, one task at a time
 4. Do NOT suggest `/batch` as an alternative — `/batch` is for uniform patterns, not independent tasks
 

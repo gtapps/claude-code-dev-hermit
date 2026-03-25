@@ -1,25 +1,25 @@
 ---
 name: init
-description: Initializes the dev pack in the current project. Requires claude-code-hermit core to be initialized first. Appends dev-specific CLAUDE.md block, recommends strict profile, and offers dev heartbeat items.
+description: Initializes the dev hermit in the current project. Requires claude-code-hermit core to be initialized first. Appends dev-specific CLAUDE.md block, recommends strict profile, and offers dev heartbeat items.
 ---
-# Initialize Dev Pack
+# Initialize Dev Hermit
 
-Set up the development workflow pack for this project. Requires claude-code-hermit core.
+Set up the dev hermit for this project. Requires claude-code-hermit core.
 
-## Steps
+## Plan
 
 ### 1. Check prerequisites
 
 Check if `.claude/.claude-code-hermit/` exists in the current project.
 - If it does NOT exist: tell the operator to run `/claude-code-hermit:init` first, then stop.
-- If it exists: read `.claude/.claude-code-hermit/config.json` and check that `_hermit_versions["claude-code-hermit"]` is present. If missing: warn the operator that this dev pack requires claude-code-hermit and suggest running `/claude-code-hermit:init` first. Allow proceeding if the operator chooses to continue anyway.
+- If it exists: read `.claude/.claude-code-hermit/config.json` and check that `_hermit_versions["claude-code-hermit"]` is present. If missing: warn the operator that this dev hermit requires claude-code-hermit and suggest running `/claude-code-hermit:init` first. Allow proceeding if the operator chooses to continue anyway.
 - If it exists and version is present: proceed.
 
 ### 2. Check if already initialized
 
 Check if `CLAUDE.md` contains `<!-- claude-code-dev-hermit: Development Workflow -->`.
-- If yes: inform the operator the dev pack is already initialized. Ask if they want to reinitialize (to pick up new version content).
-  - If yes: remove the existing dev pack block — starting from the `---` line immediately before `<!-- claude-code-dev-hermit: Development Workflow -->`, through to the next `---` on its own line (outside code fences) or EOF. Then proceed to step 3.
+- If yes: inform the operator the dev hermit is already initialized. Ask if they want to reinitialize (to pick up new version content).
+  - If yes: remove the existing dev hermit block — starting from the `---` line immediately before `<!-- claude-code-dev-hermit: Development Workflow -->`, through to the next `---` on its own line (outside code fences) or EOF. Then proceed to step 3.
   - If no: skip step 3 (proceed directly to step 4 — profile and heartbeat checks still run).
 - If no: proceed.
 
@@ -33,7 +33,7 @@ Check `.claude/settings.json` for `env.AGENT_HOOK_PROFILE`.
 
 - If set to `strict`: good, inform that git-push-guard is active
 - If set to `standard` or not set:
-  - Inform: "The dev pack includes a git-push-guard hook that blocks direct pushes to main and --no-verify usage. This hook only activates at the `strict` profile."
+  - Inform: "The dev hermit includes a git-push-guard hook that blocks direct pushes to main and --no-verify usage. This hook only activates at the `strict` profile."
   - Ask: "Enable strict profile? (yes / no) [yes]"
   - If yes: update `.claude/settings.json` to set `AGENT_HOOK_PROFILE=strict`
   - If no: note that git safety hooks are inactive
@@ -64,7 +64,7 @@ Check if OPERATOR.md exists and contains `## Development Conventions` to determi
 Print a summary (adapt lines to reflect what actually happened):
 
 ```
-Dev pack initialized!
+Dev hermit initialized!
 
 Updated:
   CLAUDE.md — dev workflow block [appended / replaced / already present, unchanged]
