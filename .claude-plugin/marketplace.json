@@ -1,9 +1,14 @@
 {
-  "version": "0.0.1",
-  "owner": "gtapps",
-  "plugins": {
-    "claude-code-dev-hermit": {
-      "source": "./"
+  "name": "claude-code-dev-hermit",
+  "owner": {
+    "name": "gtapps"
+  },
+  "plugins": [
+    {
+      "name": "claude-code-dev-hermit",
+      "source": "./",
+      "description": "Software development agents, workflows, and git safety for claude-code-hermit",
+      "version": "0.0.1"
     }
-  }
+  ]
 }
