@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.3] - 2026-03-26
+
+### Changed
+- Unified session lifecycle alignment with core v0.0.3
+- dev-session restructured as a persistent task loop: quality pass → idle transition → "What's next?" → next task
+- dev-session no longer invokes `/session-close` — operator runs it when they want full shutdown
+- dev-session now invokes `pattern-detect` directly at task boundaries (core's `/session-close` no longer runs at task boundaries)
+- "Dev Session Close Checklist" renamed to "Dev Task Completion Checklist" (verified at every task boundary, not just close)
+- dev-parallel notes that parallel work completion feeds back into dev-session's task-complete flow
+- Removed all close mode branching, "always-on only" qualifiers, and idle/shutdown mode distinctions
+- Version requirement bumped to claude-code-hermit v0.0.3+
+
 ## [0.0.2] - 2026-03-25
 
 ### Changed

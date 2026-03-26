@@ -4,7 +4,7 @@ Software development agents, workflows, and git safety for [claude-code-hermit](
 
 ## Requires
 
-- `claude-code-hermit` v0.0.2+ (core)
+- `claude-code-hermit` v0.0.3+ (core)
 
 ## Install
 

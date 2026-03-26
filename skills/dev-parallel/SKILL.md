@@ -68,6 +68,8 @@ Distinct changes in different areas:
 - Include review findings
 - Ask how to proceed: merge, revise, or discard each branch
 
+After parallel results are accepted and merged, the quality pass runs as normal, followed by dev-session's task-complete flow — the task is archived and the agent waits for the next task. Do not duplicate the idle transition logic here.
+
 ## Heuristic
 
 > **Same change across N files → `/batch`.** Different changes on different areas → **Agent Teams.**
@@ -76,4 +78,4 @@ Distinct changes in different areas:
 
 ## Pattern Tracking Note
 
-Parallel work sessions may generate patterns worth tracking (e.g., the same blocker appearing across multiple parallel workers). These patterns will be picked up by core's `pattern-detect` at session-close — no special handling is needed during parallel work. However, if you notice a recurring issue across workers, consider creating a manual proposal with an appropriate dev category prefix (e.g., [tooling], [architecture]) via `/claude-code-hermit:proposal-create`.
+Parallel work sessions may generate patterns worth tracking (e.g., the same blocker appearing across multiple parallel workers). These patterns will be picked up by `pattern-detect` at the next task boundary (idle transition) — no special handling is needed during parallel work. However, if you notice a recurring issue across workers, consider creating a manual proposal with an appropriate dev category prefix (e.g., [tooling], [architecture]) via `/claude-code-hermit:proposal-create`.

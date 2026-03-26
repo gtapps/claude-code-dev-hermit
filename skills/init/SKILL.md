@@ -85,5 +85,5 @@ Available agents:
 Core learning loop (from claude-code-hermit):
   /claude-code-hermit:proposal-list   — view proposals (including auto-detected)
   /claude-code-hermit:proposal-act    — accept, defer, or dismiss proposals
-  /claude-code-hermit:pattern-detect  — runs automatically at session close
+  /claude-code-hermit:pattern-detect  — runs automatically at task boundaries
 ```

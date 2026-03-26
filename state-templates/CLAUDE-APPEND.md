@@ -32,21 +32,21 @@ Do NOT add /simplify, /review, /batch, or /debug invocations to agent
 definition files (agents/\*.md). They will silently fail because subagents
 have access to tools (Read, Bash, Grep, etc.) but not the Skill tool.
 
-## Dev Session Close Checklist
+## Dev Task Completion Checklist
 
-Before closing a dev session, verify these IN ADDITION to core's
+Before archiving a task (idle transition), verify these IN ADDITION to core's
 quality checklist:
 
 - [ ] Feature branch is committed (no uncommitted changes in worktree)
 - [ ] Tests pass on the feature branch
 - [ ] Branch name is recorded in SHELL.md
-- [ ] If implementation is partial (full shutdown only): "Next Start Point" describes what
-      remains to implement (not just "continue work") — idle transitions use Session Summary instead
+- [ ] If implementation is partial: Session Summary describes what was completed
+      and what remains
 - [ ] If reviewer was invoked: recommendation (approve/request-changes/
       discuss) is recorded in Progress Log
 - [ ] If /simplify was run: note whether it was applied or reverted
-- [ ] Pattern detection: core's session-close runs pattern-detect automatically —
-      no manual step needed, but verify any auto-created proposals make sense
+- [ ] Pattern detection: dev-session invokes pattern-detect at every task
+      boundary — verify any auto-created proposals make sense
 
 ## Dev Session Hygiene
 
@@ -68,7 +68,7 @@ the proposal title prefix for consistent sorting:
 
 Example: `PROP-014: [tech-debt] Extract payment logic into service layer`
 
-Auto-detected proposals (created by core's pattern-detect at session close) use
+Auto-detected proposals (created by pattern-detect at task boundaries) use
 core categories: [blocker], [workaround], [cost-trend], [tag-correlation].
 Dev categories above are for manual proposals created during dev sessions.
 

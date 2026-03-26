@@ -96,26 +96,20 @@ Before running /simplify at the session level:
    - If critical issues are found: loop back to implementation to address them
    - If clean or minor issues only: proceed
 
-## Session Close
+## Task Complete
 
-When the operator signals they're done (or you complete the task):
+When the task is complete (or the operator decides to move on, even if partial or blocked):
 
-- If the session is closing with status `blocked`: suggest running `/debug` to check for tool or hook failures before closing. If `/debug` is not available, skip this suggestion.
-- Invoke the `/claude-code-hermit:session-close` skill.
-  - Core's session-close determines the close mode based on `always_on` config: **idle transition** (task archived, session stays open for next task) or **full shutdown** (session archived, SHELL.md reset). The dev close checklist below applies to both modes unless noted.
-  - Core session-close automatically invokes `pattern-detect` before archiving. Do NOT invoke pattern-detect separately.
-  - Pattern-detect analyzes recent session reports for recurring blockers, workarounds, cost trends, and tag correlations, auto-creating proposals when patterns appear 3+ times.
-  - Dev-specific proposal categories ([missing-tests], [tech-debt], [dependency], [tooling], [architecture]) are for manual proposals created during dev sessions. Auto-detected proposals use core categories ([blocker], [workaround], [cost-trend], [tag-correlation]).
+### Idle transition
 
-### Dev close checklist (both modes unless noted)
+1. Finalize SHELL.md — ensure all progress, blockers, and findings are recorded
+2. Verify the Dev Task Completion Checklist (defined in CLAUDE-APPEND.md)
+3. If task completing as `blocked`: suggest `/debug` to check tool/hook failures before archiving. If `/debug` is not available, skip this suggestion. If the operator accepts and it unblocks the task, resume work instead of archiving.
+4. Create proposals for any high-leverage improvements discovered during work (use dev proposal categories: [missing-tests], [tech-debt], [dependency], [tooling], [architecture])
+5. Invoke the `pattern-detect` skill to analyze recent session reports (skips if fewer than 3 prior reports). Auto-detected proposals use core categories ([blocker], [workaround], [cost-trend], [tag-correlation]).
+6. Use `session-mgr` to perform an **idle transition** (archive report as S-NNN, reset task-scoped sections, set status to idle)
+7. If `heartbeat.enabled` is true in config and heartbeat is not already running: start it (`/claude-code-hermit:heartbeat start`)
+8. Report: "Task archived as S-NNN. What's next?"
+9. Once the operator provides a new task: go back to the **Task planning** step
 
-- Feature branch is committed (no uncommitted changes in worktree)
-- Tests pass on the feature branch
-- Branch name is recorded in SHELL.md
-- If implementation is partial: "Next Start Point" describes what remains **(full shutdown only)** — idle transitions use Session Summary instead
-- If reviewer was invoked: recommendation recorded in Progress Log
-- If /simplify was run: note whether applied or reverted
-
-## Dev-Specific Pattern Categories
-
-Use the dev proposal categories defined in CLAUDE.md (under "Dev Proposal Categories") when creating manual proposals. Core auto-detection categories ([blocker], [workaround], [cost-trend], [tag-correlation]) are assigned automatically by pattern-detect at session close.
+To end the session entirely, the operator runs `/claude-code-hermit:session-close` at any time.
