@@ -30,7 +30,7 @@ These skills enhance the workflow but are not required:
 
 After session-start completes:
 
-1. Check: is this the first session? (no `S-*-REPORT.md` files in `.claude/.claude-code-hermit/sessions/`)
+1. Check: is this the first session? (no `S-*-REPORT.md` files in `.claude-code-hermit/sessions/`)
 2. If yes:
    - Invoke `repo-mapper` agent with instruction: "Map this codebase"
    - Append repo-mapper's structured output to SHELL.md under a new `## Codebase Orientation` section (insert before `## Plan`)
@@ -47,7 +47,7 @@ After establishing the task:
 
 1. Propose an ordered list of plan items
 2. Confirm with the operator before starting work
-3. Work through plan items, updating `.claude/.claude-code-hermit/sessions/SHELL.md` after each significant plan item
+3. Work through plan items, updating `.claude-code-hermit/sessions/SHELL.md` after each significant plan item
 
 ### After implementer returns
 

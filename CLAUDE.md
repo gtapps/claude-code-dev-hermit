@@ -51,7 +51,7 @@ This dev hermit honours these core contracts:
 
 1. Profile-gating via `AGENT_HOOK_PROFILE` env var (`minimal`/`standard`/`strict`)
 2. Session lifecycle: `session-start` → work → idle → work → ... → `session-close` (operator-invoked). Dev-session owns the task loop; `/session-close` is never called at task boundaries
-3. State dir: `.claude/.claude-code-hermit/` (sessions/, proposals/, templates/)
+3. State dir: `.claude-code-hermit/` (sessions/, proposals/, templates/)
 4. Hermit detection via glob on plugin.json
 5. Hermit activation appends `state-templates/CLAUDE-APPEND.md` to CLAUDE.md
 6. `strict` profile = "all of standard + hermit hooks"

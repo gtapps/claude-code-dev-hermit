@@ -10,9 +10,9 @@ Set up the dev hermit for this project. Requires claude-code-hermit core.
 
 ### 1. Check prerequisites
 
-Check if `.claude/.claude-code-hermit/` exists in the current project.
+Check if `.claude-code-hermit/` exists in the current project.
 - If it does NOT exist: tell the operator to run `/claude-code-hermit:init` first, then stop.
-- If it exists: read `.claude/.claude-code-hermit/config.json` and check that `_hermit_versions["claude-code-hermit"]` is present. If missing: warn the operator that this dev hermit requires claude-code-hermit and suggest running `/claude-code-hermit:init` first. Allow proceeding if the operator chooses to continue anyway.
+- If it exists: read `.claude-code-hermit/config.json` and check that `_hermit_versions["claude-code-hermit"]` is present. If missing: warn the operator that this dev hermit requires claude-code-hermit and suggest running `/claude-code-hermit:init` first. Allow proceeding if the operator chooses to continue anyway.
 - If it exists and version is present: proceed.
 
 ### 2. Check if already initialized
@@ -40,7 +40,7 @@ Check `.claude/settings.json` for `env.AGENT_HOOK_PROFILE`.
 
 ### 5. Suggest dev heartbeat items
 
-Check if `.claude/.claude-code-hermit/HEARTBEAT.md` exists:
+Check if `.claude-code-hermit/HEARTBEAT.md` exists:
 
 - If it exists:
   - Read current contents

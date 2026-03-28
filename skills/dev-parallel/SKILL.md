@@ -7,7 +7,7 @@ description: Launch parallel work for the current session. Routes to /batch (pat
 Launch parallel work for the current session task. Routes to the best parallel execution strategy based on the nature of the work.
 
 ## Prerequisites
-- An active session with a defined task (`.claude/.claude-code-hermit/sessions/SHELL.md` must exist)
+- An active session with a defined task (`.claude-code-hermit/sessions/SHELL.md` must exist)
 
 ## External Dependencies (Optional)
 
@@ -19,7 +19,7 @@ Launch parallel work for the current session task. Routes to the best parallel e
 
 ### 1. Assess the parallel work
 
-- Read `.claude/.claude-code-hermit/sessions/SHELL.md` for the current task and plan
+- Read `.claude-code-hermit/sessions/SHELL.md` for the current task and plan
 - Identify plan items that have no dependencies on each other
 - Classify the work:
 
