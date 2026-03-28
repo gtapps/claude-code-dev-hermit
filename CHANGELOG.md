@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.0.5] - 2026-03-28
+
+### Changed
+- Aligned with core v0.0.5: `pattern-detect` → `reflect` rename throughout
+- All references to `pattern-detect` updated to `reflect` in CLAUDE.md contracts, CLAUDE-APPEND.md, dev-session skill, and init skill
+- Version requirement bumped to claude-code-hermit v0.0.5+
+- UPGRADE.md updated with v0.0.4→v0.0.5 migration instructions
+
+## [0.0.4] - 2026-03-27
+
+### Changed
+- Aligned with core v0.0.4: memory-driven reflection, idle agency, daily rhythm
+- Pattern-detect invocation at task boundaries reframed: supplementary reflection point (platform now learns independently via heartbeat and natural pauses)
+- Removed 4 deterministic auto-detection categories ([blocker], [workaround], [cost-trend], [tag-correlation]) — reflection is freeform
+- Removed 3-report prerequisite for pattern-detect — learns from day one
+- Dev proposal categories reframed as a filing system, not a structural counterpart to core categories
+- CLAUDE-APPEND: added Idle Agency Awareness section — dev rules apply to all dev work including autonomous idle pickup
+- Contract 7: learning invocation framed as supplementary to platform, not sole trigger
+- Contract 9: dev categories reframed as filing system
+- Added Contract 12: ambient dev rules — behavioral rules apply regardless of how dev work was initiated
+- init skill: pattern-detect description updated to show all trigger sources
+- Version requirement bumped to claude-code-hermit v0.0.4+
+
 ## [0.0.3] - 2026-03-26
 
 ### Changed

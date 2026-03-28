@@ -45,7 +45,7 @@ quality checklist:
 - [ ] If reviewer was invoked: recommendation (approve/request-changes/
       discuss) is recorded in Progress Log
 - [ ] If /simplify was run: note whether it was applied or reverted
-- [ ] Pattern detection: dev-session invokes pattern-detect at every task
+- [ ] Pattern detection: dev-session invokes reflect at every task
       boundary — verify any auto-created proposals make sense
 
 ## Dev Session Hygiene
@@ -54,6 +54,19 @@ Dev workflows generate verbose SHELL.md updates (implementer output, review find
 /simplify results). Core's session hygiene rules apply: keep SHELL.md under 150 lines,
 compact at 200+. After each implementer cycle, check line count and summarize older
 Progress Log entries if needed.
+
+## Idle Agency Awareness
+
+During idle, heartbeat may autonomously pick up work — including dev tasks
+from NEXT-TASK.md (created by accepted dev proposals). All dev rules apply
+to autonomous work the same as operator-directed work:
+
+- Git safety (no push to main, no --no-verify, feature branches only)
+- Dev Task Completion Checklist (verified at every task boundary)
+- Dev proposal categories (for any manual proposals created during the work)
+
+Idle agency is gated by escalation level. The hermit asks before taking
+high-impact actions at conservative/balanced escalation.
 
 ## Dev Proposal Categories
 
@@ -68,9 +81,11 @@ the proposal title prefix for consistent sorting:
 
 Example: `PROP-014: [tech-debt] Extract payment logic into service layer`
 
-Auto-detected proposals (created by pattern-detect at task boundaries) use
-core categories: [blocker], [workaround], [cost-trend], [tag-correlation].
-Dev categories above are for manual proposals created during dev sessions.
+Auto-detected proposals come from reflect's reflection on memory
+and recent work — no fixed categories. They may surface dev-relevant
+patterns (recurring test failures, workarounds, cost anomalies) alongside
+broader operational patterns. Dev categories above are a filing system for
+proposals you create explicitly during dev sessions.
 
 ## Dev Quick Reference
 

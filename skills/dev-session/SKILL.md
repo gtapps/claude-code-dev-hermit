@@ -106,7 +106,7 @@ When the task is complete (or the operator decides to move on, even if partial o
 2. Verify the Dev Task Completion Checklist (defined in CLAUDE-APPEND.md)
 3. If task completing as `blocked`: suggest `/debug` to check tool/hook failures before archiving. If `/debug` is not available, skip this suggestion. If the operator accepts and it unblocks the task, resume work instead of archiving.
 4. Create proposals for any high-leverage improvements discovered during work (use dev proposal categories: [missing-tests], [tech-debt], [dependency], [tooling], [architecture])
-5. Invoke the `pattern-detect` skill to analyze recent session reports (skips if fewer than 3 prior reports). Auto-detected proposals use core categories ([blocker], [workaround], [cost-trend], [tag-correlation]).
+5. Invoke the `reflect` skill to reflect on the completed task (uses memory, SHELL.md, and cost log). Reflect also fires independently via heartbeat, natural pauses, and end of day — invoking it here ensures task boundaries are always a reflection point.
 6. Use `session-mgr` to perform an **idle transition** (archive report as S-NNN, reset task-scoped sections, set status to idle)
 7. If `heartbeat.enabled` is true in config and heartbeat is not already running: start it (`/claude-code-hermit:heartbeat start`)
 8. Report: "Task archived as S-NNN. What's next?"

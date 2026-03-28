@@ -78,4 +78,4 @@ After parallel results are accepted and merged, the quality pass runs as normal,
 
 ## Pattern Tracking Note
 
-Parallel work sessions may generate patterns worth tracking (e.g., the same blocker appearing across multiple parallel workers). These patterns will be picked up by `pattern-detect` at the next task boundary (idle transition) — no special handling is needed during parallel work. However, if you notice a recurring issue across workers, consider creating a manual proposal with an appropriate dev category prefix (e.g., [tooling], [architecture]) via `/claude-code-hermit:proposal-create`.
+Parallel work sessions may generate patterns worth tracking (e.g., the same blocker appearing across multiple parallel workers). These patterns will be picked up by `reflect` at the next task boundary (idle transition) — no special handling is needed during parallel work. However, if you notice a recurring issue across workers, consider creating a manual proposal with an appropriate dev category prefix (e.g., [tooling], [architecture]) via `/claude-code-hermit:proposal-create`.
