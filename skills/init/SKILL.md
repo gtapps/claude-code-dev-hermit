@@ -13,7 +13,8 @@ Set up the dev hermit for this project. Requires claude-code-hermit core.
 Check if `.claude-code-hermit/` exists in the current project.
 - If it does NOT exist: tell the operator to run `/claude-code-hermit:init` first, then stop.
 - If it exists: read `.claude-code-hermit/config.json` and check that `_hermit_versions["claude-code-hermit"]` is present. If missing: warn the operator that this dev hermit requires claude-code-hermit and suggest running `/claude-code-hermit:init` first. Allow proceeding if the operator chooses to continue anyway.
-- If it exists and version is present: proceed.
+- If it exists and version is present but less than `0.1.1`: warn that this dev hermit is designed for core v0.1.1+ and recommend running `/claude-code-hermit:upgrade` first. Allow proceeding if the operator chooses to continue.
+- If it exists and version is `0.1.1` or later: proceed.
 
 ### 2. Check if already initialized
 
@@ -29,13 +30,13 @@ Read `${CLAUDE_PLUGIN_ROOT}/state-templates/CLAUDE-APPEND.md` and append its con
 
 ### 4. Recommend strict profile
 
-Check `.claude/settings.json` for `env.AGENT_HOOK_PROFILE`.
+Using the config.json already read in step 1, check `env.AGENT_HOOK_PROFILE`.
 
 - If set to `strict`: good, inform that git-push-guard is active
 - If set to `standard` or not set:
   - Inform: "The dev hermit includes a git-push-guard hook that blocks direct pushes to main and --no-verify usage. This hook only activates at the `strict` profile."
   - Ask: "Enable strict profile? (yes / no) [yes]"
-  - If yes: update `.claude/settings.json` to set `AGENT_HOOK_PROFILE=strict`
+  - If yes: update `.claude-code-hermit/config.json` to set `env.AGENT_HOOK_PROFILE` to `"strict"`
   - If no: note that git safety hooks are inactive
 
 ### 5. Suggest dev heartbeat items

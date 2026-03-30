@@ -2,6 +2,29 @@
 
 These instructions are read by the core `upgrade` skill when upgrading this hermit.
 
+## v0.0.6 → v0.0.7
+
+Alignment with core v0.1.1: config-driven compaction, cost tracking awareness.
+
+1. Run `/claude-code-hermit:upgrade` first — core handles `compact.*` config keys and cost tracker improvements
+2. In project's CLAUDE.md dev block (`<!-- claude-code-dev-hermit: Development Workflow -->`):
+   - Replace the entire block with the updated `state-templates/CLAUDE-APPEND.md`
+   - Key change: "Dev Session Hygiene" now splits compaction responsibility — Progress Log compaction is dev-session's job during active work, Monitoring/Session Summary deferred to session-mgr on idle transition
+   - New: `## Cost` section noted as auto-populated by core's cost-tracker hook
+3. No config changes required — core's `compact.*` keys are in the core config, not dev-hermit's
+
+## v0.0.5 → v0.0.6
+
+Alignment with core v0.0.6–v0.0.10: env system redesign, routines, idle_behavior, YAML frontmatter.
+
+1. Run `/claude-code-hermit:upgrade` first — it handles core's config migration (env key, routines, idle_behavior, YAML frontmatter on reports/proposals)
+2. In project's CLAUDE.md dev block (`<!-- claude-code-dev-hermit: Development Workflow -->`):
+   - Replace the entire block with the updated `state-templates/CLAUDE-APPEND.md`
+   - Key change: "Idle Agency Awareness" now references `idle_behavior` config key (`"wait"`/`"discover"`) and `## When Idle` OPERATOR.md section
+3. Optionally add `## When Idle` to OPERATOR.md with dev-specific maintenance tasks (e.g., "run npm audit", "check stale PRs") — picked up when `idle_behavior` is `"discover"`
+
+No manual change needed for AGENT_HOOK_PROFILE — if you already have strict profile set, the `init` skill will find it in `config.json`'s `env` key where core v0.0.7 placed it.
+
 ## v0.0.4 → v0.0.5
 
 Alignment with core v0.0.5: `pattern-detect` → `reflect` rename, Docker-first always-on, takeover/hand-back.

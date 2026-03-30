@@ -8,7 +8,7 @@
       "name": "claude-code-dev-hermit",
       "source": "./",
       "description": "Software development agents, workflows, and git safety for claude-code-hermit",
-      "version": "0.0.5"
+      "version": "0.0.7"
     }
   ]
 }

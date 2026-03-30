@@ -18,7 +18,7 @@
 
 The `implementer` agent enforces these via "Forbidden Actions" prompt rules (always active).
 The `git-push-guard` hook provides a second enforcement layer at **strict** profile only.
-Set `AGENT_HOOK_PROFILE=strict` in `.claude/settings.json` to enable hook enforcement.
+Set `env.AGENT_HOOK_PROFILE` to `"strict"` in `.claude-code-hermit/config.json` to enable hook enforcement.
 
 ## Technical Constraints
 
@@ -50,16 +50,18 @@ quality checklist:
 
 ## Dev Session Hygiene
 
-Dev workflows generate verbose SHELL.md updates (implementer output, review findings,
-/simplify results). Core's session hygiene rules apply: keep SHELL.md under 150 lines,
-compact at 200+. After each implementer cycle, check line count and summarize older
-Progress Log entries if needed.
+- **Progress Log**: if entries exceed 50, summarize older entries into a compact block; keep last 10 in detail
+- **Monitoring & Session Summary**: compacted by session-mgr on idle transition — do not compact mid-task
+- **Cost section**: auto-populated by core's cost-tracker hook — do not write manually
 
 ## Idle Agency Awareness
 
-During idle, heartbeat may autonomously pick up work — including dev tasks
-from NEXT-TASK.md (created by accepted dev proposals). All dev rules apply
-to autonomous work the same as operator-directed work:
+During idle, the hermit can pick up dev work autonomously. Control this with
+`idle_behavior` in config.json: `"wait"` (default — check tasks and channel
+messages only) or `"discover"` (also run maintenance tasks from OPERATOR.md
+and periodic reflection).
+
+All dev rules apply to autonomous work the same as operator-directed work:
 
 - Git safety (no push to main, no --no-verify, feature branches only)
 - Dev Task Completion Checklist (verified at every task boundary)
@@ -67,6 +69,10 @@ to autonomous work the same as operator-directed work:
 
 Idle agency is gated by escalation level. The hermit asks before taking
 high-impact actions at conservative/balanced escalation.
+
+To define dev-specific idle tasks (e.g., "run npm audit weekly", "check for
+stale PRs"), add a `## When Idle` section to OPERATOR.md. These tasks are
+picked up by the hermit when `idle_behavior` is `"discover"`.
 
 ## Dev Proposal Categories
 

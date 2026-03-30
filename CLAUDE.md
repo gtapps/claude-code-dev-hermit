@@ -4,7 +4,7 @@ Software development agents, workflows, and git safety for claude-code-hermit.
 
 ## This Repo is a Plugin
 
-This repo is a Claude Code plugin. It extends `claude-code-hermit` (core v0.0.5+) with software development capabilities.
+This repo is a Claude Code plugin. It extends `claude-code-hermit` (core v0.1.1+) with software development capabilities.
 
 Install flow for target projects:
 
@@ -43,7 +43,7 @@ These optional skills enhance the workflow:
 
 ## Depends On
 
-- `claude-code-hermit` v0.0.5+ (core) — session discipline, cost tracking, OPERATOR.md, learning loop
+- `claude-code-hermit` v0.1.1+ (core) — session discipline, cost tracking, OPERATOR.md, learning loop
 
 ## Core Contracts
 
@@ -59,5 +59,5 @@ This dev hermit honours these core contracts:
 8. NEXT-TASK.md: dev-session is aware core handles this at session-start; does not duplicate
 9. Dev proposal categories: `[missing-tests]`, `[tech-debt]`, `[dependency]`, `[tooling]`, `[architecture]` are a filing system for dev-specific proposals (manual and auto-detected). Core's reflection may independently surface dev-relevant patterns — no fixed categories
 10. Unified lifecycle: dev-session owns the task loop — performs idle transition at every task boundary (mirrors core session skill step 6), never invokes session-close directly
-11. Session hygiene: dev workflows note SHELL.md compaction responsibility after implementer cycles
+11. Session hygiene: dev workflows defer to core's `compact.*` config for SHELL.md section compaction on idle transition; Progress Log compaction during active work remains dev-session's responsibility
 12. Ambient dev rules: dev-hermit's behavioral rules (git safety, task completion checklist, proposal categories) apply to all dev work regardless of how it was initiated — operator-directed `/dev-session`, NEXT-TASK.md pickup during idle, or autonomous idle agency work

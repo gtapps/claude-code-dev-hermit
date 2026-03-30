@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.0.7] - 2026-03-30
+
+### Changed
+- Aligned with core v0.1.1 (config-driven compaction, cost tracking, session-mgr changes)
+- `state-templates/CLAUDE-APPEND.md`: "Dev Session Hygiene" rewritten — Progress Log compaction is dev-session's job during active work; Monitoring/Session Summary compaction deferred to session-mgr on idle transition; notes `## Cost` is auto-populated
+- `skills/dev-session/SKILL.md`: post-implementer hygiene note updated with split compaction responsibilities; idle transition step 6 notes session-mgr compaction
+- `skills/init/SKILL.md`: prerequisite check warns if core version < 0.1.1
+- `CLAUDE.md`: dependency bumped to v0.1.1+, contract 11 updated to reference core's compact system
+- `.claude-plugin/marketplace.json`: version aligned with plugin.json (was stuck at 0.0.5)
+
+## [0.0.6] - 2026-03-30
+
+### Changed
+- Aligned with core v0.0.6–v0.0.10
+- `init` skill: reads/writes `env.AGENT_HOOK_PROFILE` from `.claude-code-hermit/config.json` instead of `.claude/settings.json` (core v0.0.7 env system alignment)
+- `state-templates/CLAUDE-APPEND.md`: "Idle Agency Awareness" section updated to reference `idle_behavior` config key (`"wait"`/`"discover"`) and `## When Idle` OPERATOR.md section (core v0.0.9 routines/idle_behavior alignment)
+- `UPGRADE.md`: added v0.0.5→v0.0.6 migration instructions covering env system, idle_behavior, and YAML frontmatter
+- Version requirement bumped to `claude-code-hermit v0.0.10+`
+
 ## [0.0.5] - 2026-03-28
 
 ### Changed

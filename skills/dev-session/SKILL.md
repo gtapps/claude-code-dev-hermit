@@ -61,9 +61,9 @@ Parse the implementer's structured output and update SHELL.md:
 
 Do NOT silently discard the implementer's structured output. Every section of the output maps to a section of SHELL.md.
 
-> After updating SHELL.md, check line count. If over 150 lines, compact the Progress Log
-> (summarize older entries into a 5-10 line block, keep last 10 in detail).
-> Core's session hygiene rules apply — see core's CLAUDE-APPEND.md.
+> After updating SHELL.md, check Progress Log entry count. If over 50 entries, summarize
+> older entries into a compact block (keep last 10 in detail). Monitoring & Session Summary
+> are compacted by session-mgr on idle transition — do not compact them mid-task.
 
 ## Post-Implementation Quality Pass
 
@@ -107,7 +107,7 @@ When the task is complete (or the operator decides to move on, even if partial o
 3. If task completing as `blocked`: suggest `/debug` to check tool/hook failures before archiving. If `/debug` is not available, skip this suggestion. If the operator accepts and it unblocks the task, resume work instead of archiving.
 4. Create proposals for any high-leverage improvements discovered during work (use dev proposal categories: [missing-tests], [tech-debt], [dependency], [tooling], [architecture])
 5. Invoke the `reflect` skill to reflect on the completed task (uses memory, SHELL.md, and cost log). Reflect also fires independently via heartbeat, natural pauses, and end of day — invoking it here ensures task boundaries are always a reflection point.
-6. Use `session-mgr` to perform an **idle transition** (archive report as S-NNN, reset task-scoped sections, set status to idle)
+6. Use `session-mgr` to perform an **idle transition** (archive report as S-NNN, reset task-scoped sections, compact Monitoring & Session Summary per `compact.*` config, set status to idle)
 7. If `heartbeat.enabled` is true in config and heartbeat is not already running: start it (`/claude-code-hermit:heartbeat start`)
 8. Report: "Task archived as S-NNN. What's next?"
 9. Once the operator provides a new task: go back to the **Task planning** step
