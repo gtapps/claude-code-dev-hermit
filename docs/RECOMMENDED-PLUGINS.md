@@ -6,6 +6,8 @@ The `dev-hatch` wizard offers these during setup. All are official plugins from 
 
 ## code-review
 
+GitHub: [anthropics/claude-code-plugins](https://github.com/anthropics/claude-code-plugins)
+
 ```bash
 claude plugin install code-review@claude-plugins-official --scope project
 ```
@@ -18,6 +20,8 @@ Without this plugin, the quality pass skips the review step.
 
 ## feature-dev
 
+GitHub: [anthropics/claude-code-plugins](https://github.com/anthropics/claude-code-plugins)
+
 ```bash
 claude plugin install feature-dev@claude-plugins-official --scope project
 ```
@@ -29,6 +33,8 @@ Works independently from the dev hermit workflow. Use it when you want more guid
 ---
 
 ## context7
+
+GitHub: [upstash/context7](https://github.com/upstash/context7)
 
 ```bash
 claude plugin install context7@claude-plugins-official --scope project
