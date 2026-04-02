@@ -6,7 +6,7 @@ The `dev-hatch` wizard offers these during setup. All are official plugins from 
 
 ## code-review
 
-GitHub: [anthropics/claude-code-plugins](https://github.com/anthropics/claude-code-plugins)
+GitHub: [anthropics/code-review](https://github.com/anthropics/claude-code/tree/main/plugins/code-review)
 
 ```bash
 claude plugin install code-review@claude-plugins-official --scope project
@@ -20,7 +20,7 @@ Without this plugin, the quality pass skips the review step.
 
 ## feature-dev
 
-GitHub: [anthropics/claude-code-plugins](https://github.com/anthropics/claude-code-plugins)
+GitHub: [anthropic/feature-dev](https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev)
 
 ```bash
 claude plugin install feature-dev@claude-plugins-official --scope project
