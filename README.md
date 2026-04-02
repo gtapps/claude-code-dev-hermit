@@ -1,5 +1,12 @@
 # claude-code-dev-hermit
 
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
+<a href="https://code.claude.com/docs/en/plugins"><img src="https://img.shields.io/badge/Claude%20Code-plugin-orange.svg" alt="Claude Code Plugin" /></a>
+<a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-0.1.1-green.svg" alt="Version 0.1.1" /></a>
+<a href="https://github.com/gtapps/claude-code-hermit"><img src="https://img.shields.io/badge/requires-claude--code--hermit%20v0.2.4%2B-blue.svg" alt="Requires claude-code-hermit v0.2.4+" /></a>
+<img src="https://img.shields.io/badge/Claude-Pro%20%7C%20Max-blueviolet.svg" alt="Claude Pro/Max Compatible" />
+<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
+
 A development workflow plugin for [claude-code-hermit](https://github.com/gtapps/claude-code-hermit) — git safety, quality gates, and a code-writing agent that works on branches so you don't have to worry about main.
 
 Think of it as the dev muscle for your hermit. Core handles sessions and learning. This handles building things.
@@ -83,6 +90,20 @@ These are Claude Code built-ins — no installation needed:
 - [Git Safety](docs/GIT-SAFETY.md) — hook details and profile configuration
 - [Recommended Plugins](docs/RECOMMENDED-PLUGINS.md) — companion plugins offered during setup
 
+## Contributing
+
+We'd love your help. Bug fixes, new skills, better docs — all welcome.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for design constraints, local dev setup, and PR workflow.
+
+- [Open an issue](https://github.com/gtapps/claude-code-dev-hermit/issues) — bugs, feature ideas, questions
+- [Start a discussion](https://github.com/gtapps/claude-code-dev-hermit/discussions) — broader topics, show & tell, hermit customization ideas
+
+## Credits
+
+- **[claude-code-hermit](https://github.com/gtapps/claude-code-hermit)** — The core plugin this extends
+- **[Claude Code plugins](https://github.com/anthropics/claude-code)** — The plugin platform that makes this possible
+
 ## License
 
-MIT
+[MIT](LICENSE)
