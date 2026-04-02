@@ -1,75 +1,87 @@
 # claude-code-dev-hermit
 
-Software development agents, workflows, and git safety for [claude-code-hermit](https://github.com/gtapps/claude-code-hermit).
+A development workflow plugin for [claude-code-hermit](https://github.com/gtapps/claude-code-hermit) — git safety, quality gates, and a code-writing agent that works on branches so you don't have to worry about main.
+
+Think of it as the dev muscle for your hermit. Core handles sessions and learning. This handles building things.
 
 ## Requires
 
-- `claude-code-hermit` v0.0.5+ (core)
+- [claude-code-hermit](https://github.com/gtapps/claude-code-hermit) v0.2.4+ (installed and hatched)
 
 ## Install
 
-```
+```bash
+# Install core first (skip if already done)
 claude plugin marketplace add gtapps/claude-code-hermit
 claude plugin install claude-code-hermit@claude-code-hermit --scope project
-/claude-code-hermit:init
+/claude-code-hermit:hatch
 
+# Then install the dev plugin
 claude plugin marketplace add gtapps/claude-code-dev-hermit
 claude plugin install claude-code-dev-hermit@claude-code-dev-hermit --scope project
-/claude-code-dev-hermit:init
+/claude-code-dev-hermit:dev-hatch
 ```
+
+The setup wizard asks about your branch naming, deploy process, and hook profile. It also offers companion plugins (code-review, feature-dev, context7) and suggests dev-specific heartbeat checks.
+
+## How It Works
+
+Your hermit already knows how to manage sessions, track costs, and learn from its work. This plugin adds a development workflow on top:
+
+1. **Plan** — break the task into steps (native Tasks)
+2. **Implement** — delegate to the `implementer` agent, which works in an isolated git worktree on a feature branch
+3. **Quality pass** — run `/claude-code-dev-hermit:dev-quality` (tests, `/simplify`, tests again, code review)
+4. **Reflect** — the hermit reflects on what it learned before moving on
+
+The implementer never touches main. It commits to feature branches, runs tests, and hands back a structured summary. You review and merge on your terms.
 
 ## What's Included
 
-- **3 agents:** repo-mapper, implementer, reviewer
-- **3 skills:** dev-session, dev-parallel, dev-cleanup
-- **1 init skill:** project setup and profile configuration
-- **1 hook:** git-push-guard (strict profile only)
+### Agent
 
-## Agents
+| Agent | Model | What it does |
+|-------|-------|-------------|
+| `implementer` | Sonnet | Writes code in an isolated worktree. Feature branches only. Tests before and after. |
 
-| Agent | Model | Purpose |
-|-------|-------|---------|
-| `repo-mapper` | Haiku | Read-only codebase scanning for orientation, file discovery, and dependency mapping |
-| `implementer` | Sonnet | Code writing in an isolated worktree — feature implementation, bug fixes, refactoring |
-| `reviewer` | Sonnet | Read-only code review for quality, correctness, security, and convention adherence |
+### Skills
 
-## Skills
-
-| Skill | Description |
+| Skill | What it does |
 |-------|-------------|
-| `/claude-code-dev-hermit:dev-session` | Orchestrated development session with quality workflow |
-| `/claude-code-dev-hermit:dev-parallel` | Parallel work routing (pattern → `/batch`, independent → Agent Teams) |
-| `/claude-code-dev-hermit:dev-cleanup` | List and clean up stale or merged git branches |
-| `/claude-code-dev-hermit:init` | Initialize the dev hermit in a target project |
+| `dev-hatch` | One-time project setup — appends dev workflow to CLAUDE.md, configures git safety, installs companion plugins |
+| `dev-quality` | Post-implementation quality pass — tests, simplify, tests, code review |
+| `dev-cleanup` | Lists stale/merged branches and offers to clean them up safely |
 
-## Git Safety
+### Git Safety
 
-The `git-push-guard` hook blocks:
+The `git-push-guard` hook blocks dangerous git operations:
 
-- Direct `git push` to main/master
+- Direct push to main/master
 - `--no-verify` on any command
-- Force push (`--force` or `-f`) on any branch
+- Force push on any branch
 - `--force-with-lease` to main/master
 
-This hook only activates at the **strict** profile (`AGENT_HOOK_PROFILE=strict`). At `standard` (default), git commands are unchecked by hooks. The `init` skill offers to enable strict profile during setup.
+The hook only activates at **strict** profile. At standard (default), git commands are unchecked by hooks. The implementer agent also has its own prompt-level rules that always apply — no push, no `--no-verify`, no commits to main.
 
-## Hook Profiles
+| Profile | Hook enforcement |
+|---------|-----------------|
+| `minimal` | None |
+| `standard` (default) | None |
+| `strict` | git-push-guard active |
 
-| Profile | Git Safety |
-|---------|-----------|
-| `minimal` | No hook enforcement |
-| `standard` (default) | No hook enforcement |
-| `strict` | git-push-guard active — blocks pushes to main, --no-verify, force push |
+## Built-in Skills Used
 
-## Optional Dependencies
+These are Claude Code built-ins — no installation needed:
 
-These external skills enhance the workflow but are not required:
+- `/simplify` — code cleanup after implementation
+- `/batch` — same change across many files in parallel
+- `/debug` — diagnostics when something's stuck
 
-| Skill | Purpose | Fallback |
-|-------|---------|----------|
-| `/simplify` | Code cleanup pass | Skipped if unavailable |
-| `/pr-review-toolkit:review-pr` | 6-agent comprehensive code review | Falls back to `reviewer` agent |
-| `/batch` | Parallel pattern-based execution | Sequential `implementer` execution |
+## Documentation
+
+- [How to Use](docs/HOW-TO-USE.md) — day-to-day workflow and tips
+- [Skills Reference](docs/SKILLS.md) — detailed skill documentation
+- [Git Safety](docs/GIT-SAFETY.md) — hook details and profile configuration
+- [Recommended Plugins](docs/RECOMMENDED-PLUGINS.md) — companion plugins offered during setup
 
 ## License
 

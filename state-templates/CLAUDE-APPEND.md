@@ -2,13 +2,11 @@
 ---
 <!-- claude-code-dev-hermit: Development Workflow -->
 
-## Dev Subagents (claude-code-dev-hermit)
+## Dev Agent (claude-code-dev-hermit)
 
 | Agent | When to use | Model |
 |-------|------------|-------|
-| `repo-mapper` | Orientation, file discovery, dependency mapping | Haiku |
 | `implementer` | Writing code, bug fixes, refactoring (worktree isolated) | Sonnet |
-| `reviewer` | Code review, validation, quality checks (read-only) | Sonnet |
 
 ## Git Safety
 
@@ -22,82 +20,54 @@ Set `env.AGENT_HOOK_PROFILE` to `"strict"` in `.claude-code-hermit/config.json` 
 
 ## Technical Constraints
 
-Subagents (repo-mapper, implementer, reviewer) cannot invoke skills like
-/simplify, /review, or /batch. These skills must be invoked from the main
-session only. The dev-session workflow handles this automatically —
-/simplify and /review run in the main session after the implementer
-agent returns, not inside the implementer.
+Subagents cannot invoke skills (/simplify, /batch, etc.) — those must run in the main session only.
 
-Do NOT add /simplify, /review, /batch, or /debug invocations to agent
-definition files (agents/\*.md). They will silently fail because subagents
-have access to tools (Read, Bash, Grep, etc.) but not the Skill tool.
+## Dev Workflow
 
-## Dev Task Completion Checklist
+When doing development work:
 
-Before archiving a task (idle transition), verify these IN ADDITION to core's
-quality checklist:
+1. **Plan**: break the task into steps, create a Task for each (skip TaskCreate for trivial single-step tasks)
+2. **Implement**: use the `implementer` agent for code changes (worktree-isolated feature branches)
+3. **After implementer returns**: update SHELL.md — log branch name in Progress Log, append changed files to Changed section, note any test failures or concerns in Blockers
+4. **Quality pass**: run `/claude-code-dev-hermit:dev-quality`
+5. **If critical issues**: loop back to implementation before proceeding
+6. **Task boundary**: invoke `reflect`, serialize and delete all Tasks, then idle-transition via `session-mgr`
 
-- [ ] Feature branch is committed (no uncommitted changes in worktree)
-- [ ] Tests pass on the feature branch
-- [ ] Branch name is recorded in SHELL.md
-- [ ] If implementation is partial: Session Summary describes what was completed
-      and what remains
-- [ ] If reviewer was invoked: recommendation (approve/request-changes/
-      discuss) is recorded in Progress Log
-- [ ] If /simplify was run: note whether it was applied or reverted
-- [ ] Pattern detection: dev-session invokes reflect at every task
-      boundary — verify any auto-created proposals make sense
+First session (no prior `S-*-REPORT.md` files): explore the codebase to orient yourself before starting work.
+
+### Parallel Work
+
+- Same change across many files: use `/batch`
+- Independent tasks in different areas: use Agent Teams (if `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`), otherwise implement sequentially
+- When unsure: ask the operator
+- After parallel work completes: run `/simplify` and code review in the main session (workers can't invoke skills)
+- `/batch` workers don't have access to OPERATOR.md — enforce constraints via post-batch review
+
+### Before Archiving a Task
+
+- Feature branch is committed (no uncommitted changes)
+- Tests pass on the feature branch
+- If partial implementation: Session Summary describes what was completed and what remains
 
 ## Dev Session Hygiene
 
+- **Tasks**: plan steps are tracked as Tasks (TaskCreate/TaskUpdate) — do not maintain a Plan table in SHELL.md. Skip TaskCreate for trivial single-step tasks.
 - **Progress Log**: if entries exceed 50, summarize older entries into a compact block; keep last 10 in detail
-- **Monitoring & Session Summary**: compacted by session-mgr on idle transition — do not compact mid-task
-- **Cost section**: auto-populated by core's cost-tracker hook — do not write manually
-
-## Idle Agency Awareness
-
-During idle, the hermit can pick up dev work autonomously. Control this with
-`idle_behavior` in config.json: `"wait"` (default — check tasks and channel
-messages only) or `"discover"` (also run maintenance tasks from OPERATOR.md
-and periodic reflection).
-
-All dev rules apply to autonomous work the same as operator-directed work:
-
-- Git safety (no push to main, no --no-verify, feature branches only)
-- Dev Task Completion Checklist (verified at every task boundary)
-- Dev proposal categories (for any manual proposals created during the work)
-
-Idle agency is gated by escalation level. The hermit asks before taking
-high-impact actions at conservative/balanced escalation.
-
-To define dev-specific idle tasks (e.g., "run npm audit weekly", "check for
-stale PRs"), add a `## When Idle` section to OPERATOR.md. These tasks are
-picked up by the hermit when `idle_behavior` is `"discover"`.
 
 ## Dev Proposal Categories
 
-When creating proposals during dev sessions, use these categories in
-the proposal title prefix for consistent sorting:
-
-- **[missing-tests]** — Uncovered code paths or missing edge case tests
+Use these prefixes in proposal titles for consistent sorting:
+- **[missing-tests]** — Uncovered code paths
 - **[tech-debt]** — Code that works but should be refactored
-- **[dependency]** — Stale, vulnerable, or unnecessary dependencies
-- **[tooling]** — Missing linter rules, CI checks, or dev scripts
-- **[architecture]** — Structural improvements worth discussing
+- **[dependency]** — Stale, vulnerable, or unnecessary deps
+- **[tooling]** — Missing linter rules, CI checks, dev scripts
+- **[architecture]** — Structural improvements
 
-Example: `PROP-014: [tech-debt] Extract payment logic into service layer`
-
-Auto-detected proposals come from reflect's reflection on memory
-and recent work — no fixed categories. They may surface dev-relevant
-patterns (recurring test failures, workarounds, cost anomalies) alongside
-broader operational patterns. Dev categories above are a filing system for
-proposals you create explicitly during dev sessions.
+All dev rules (git safety, checklist, categories) apply equally to autonomous idle work.
 
 ## Dev Quick Reference
 
-- Dev session: `/claude-code-dev-hermit:dev-session`
-- Parallel work: `/claude-code-dev-hermit:dev-parallel`
+- Quality pass: `/claude-code-dev-hermit:dev-quality`
 - Branch cleanup: `/claude-code-dev-hermit:dev-cleanup`
 - List proposals: `/claude-code-hermit:proposal-list` (includes auto-detected)
 - Act on proposal: `/claude-code-hermit:proposal-act accept|defer|dismiss PROP-NNN`
-- Next task: accepted proposals may create NEXT-TASK.md, offered at session start
